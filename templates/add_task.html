@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div style="width: 40%; height: 100%; margin: 0px auto;">
+        <h1><span>Add Task</span></h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form_data|crispy }}
+            <input type="submit" class="btn btn-success" name="submit" value="Add Task" >
+            <a href="{% url 'home' %}" id="go_back" class="btn btn-primary btn-md active" role="button" aria-pressed="true">Go Back </a>
+        </form>
+
+    </div>
+{% endblock content %}

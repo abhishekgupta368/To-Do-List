@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <a href="{% url 'add_task' %}" id="task_button" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"> Add Task </a>
+    <h1><span>Due Tasks</span></h1>
+    <table class="task_table">
+    
+    <tr>
+        <th>Task</th>
+        <th>About</th>
+        <th>Due Date</th>
+        <th>Status</th>
+        <th>Catorgery</th>
+        <th>Actions</th>
+    </tr>
+    
+    {% for data in task_data%}
+        {% if data.deadline_reached == True %}
+            <tr>
+                <td>{{data.title}}</td>
+                <td>{{data.description}}</td>
+                <td>{{data.due_date|date:"d M, Y"}}</td>
+                <td><span  style = "border: 1px #68f068 solid; color: white; background-color: #68f068; padding: 5%; border-radius: 50px;">In Progress</span></td>
+                
+                {% if data.user_choice == '0' %}
+                    <td>Other</td>
+                {% elif data.user_choice == '1' %}
+                    <td>Shopping</td>
+                {% elif data.user_choice == '2' %}
+                    <td>Work</td>
+                {% elif data.user_choice == '3' %}
+                    <td>Personal</td>
+                {% elif data.user_choice == '4' %}
+                    <td>Grocery</td>
+                {% elif data.user_choice == '5' %}
+                    <td>Assignment</td>
+                {% else %}
+                    <td>None</td>
+                {% endif %}
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <a id = "btn_delete" class="btn btn-primary" href="{% url 'delete_task' data.id %}" role="button">Delete</a>
+                                </td>
+                                <td>
+                                    <a id = "btn_update" class="btn btn-primary" href="{% url 'update_task' data.id %}" role="button">Update</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+    </table>
+
+    <h1><span>Completed Task</span></h1>
+    <table class="task_table">
+    
+        <tr>
+        <th>Task</th>
+        <th>About</th>
+        <th>Due Date</th>
+        <th>Status</th>
+        <th>Catorgery</th>
+        <th>Actions</th>
+        </tr>
+        
+        {% for data in task_data%}
+            {% if data.deadline_reached == False %}
+                <tr>
+                <td>{{data.title}}</td>
+                <td>{{data.description}}</td>
+                <td>{{data.due_date |date:"d M, Y"}}</td>   
+                <td><span  style = "border: 1px #f1703c solid; color: white; background-color: #f1703c; padding: 5%; border-radius: 50px;">Completed</span></td>
+                {% if data.user_choice == '0' %}
+                    <td>Other</td>
+                {% elif data.user_choice == '1' %}
+                    <td>Shopping</td>
+                {% elif data.user_choice == '2' %}
+                    <td>Work</td>
+                {% elif data.user_choice == '3' %}
+                    <td>Personal</td>
+                {% elif data.user_choice == '4' %}
+                    <td>Grocery</td>
+                {% elif data.user_choice == '5' %}
+                    <td>Assignment</td>
+                {% else %}
+                    <td>None</td>
+                {% endif %}
+                    <td>
+                        <a id = "btn_delete" class="btn btn-primary" href="{% url 'delete_task' data.id %}" role="button">Delete</a>
+                    </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+
+{% endblock content %}
